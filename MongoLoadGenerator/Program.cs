@@ -61,6 +61,10 @@ namespace MongoLoadGenerator
 			if (taskList.Count == 0)
 				return 1;
 
+			Console.ForegroundColor = ConsoleColor.White;
+			Console.WriteLine("Press any key for stopping all tasks...");
+			Console.ReadKey();
+			taskWatcher.IsNeedStopTask = true;
 			Task.WaitAll(taskList.Cast<Task>().ToArray());
 
 			return taskList.Count == taskList.Count(t => t.Result) ? 0 : 1;
