@@ -35,20 +35,22 @@ namespace MongoLoadGenerator
 				logger.Fatal(ex);
 				return 1;
 			}
-			logger.Info($"AmountOfTasks={pars.AmountOfTasks} RequestUri='{pars.RequestUri}'");
+			logger.Info(pars.ToString());
 
 			return runTasks(logger, pars);
 		}
 
 		private static int runTasks(ILogger logger, MyArgs pars)
 		{
+			ITaskExecutor tasker = pars.ReadMode ? (ITaskExecutor) new ReadExecutor() : (ITaskExecutor) new InsertExecutor();
+
 			ITaskWatcher taskWatcher = new TaskWatcher();
 			var taskList = new List<Task<bool>>();
 			for (var i = 0; i < pars.AmountOfTasks; i++)
 			{
 				try
 				{
-					var task = TaskExecutor.ExecuteAsync(i, taskWatcher, logger, pars.RequestUri);
+					var task = tasker.ExecuteAsync(i, taskWatcher, logger, pars.RequestUri);
 					taskList.Add(task);
 				}
 				catch (Exception ex)

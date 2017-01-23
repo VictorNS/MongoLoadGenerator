@@ -67,14 +67,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseExecutor.cs" />
+    <Compile Include="ExecutionMode.cs" />
+    <Compile Include="ReadExecutor.cs" />
+    <Compile Include="ITaskExecutor.cs" />
     <Compile Include="ITaskWatcher.cs" />
     <Compile Include="MyArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskExecutor.cs" />
+    <Compile Include="InsertExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
