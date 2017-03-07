@@ -10,12 +10,14 @@ namespace MongoLoadGenerator
 		public virtual IMongoCollection<BsonDocument> Initialize(int taskNumber, ILogger logger, string uri)
 		{
 			logger.Info($"Task {taskNumber} is started.");
-			System.Threading.Thread.Sleep(10*taskNumber); // postpone killing
+			System.Threading.Thread.Sleep(100 * taskNumber); // postpone killing
 			IMongoCollection<BsonDocument> collection = null;
 			try
 			{
 				var mongoSettings = MongoClientSettings.FromUrl(MongoUrl.Create(uri));
 				//mongoSettings.WriteConcern = WriteConcern.Unacknowledged;
+				//mongoSettings.MinConnectionPoolSize = 1;
+				//mongoSettings.MaxConnectionPoolSize = 1;
 				mongoSettings.SocketTimeout = TimeSpan.FromSeconds(10);
 				mongoSettings.ReadPreference = ReadPreference.SecondaryPreferred;
 				var _client = new MongoClient(mongoSettings);
